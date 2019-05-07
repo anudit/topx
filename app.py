@@ -1,12 +1,12 @@
 import os
 import requests
+from tqdm import tqdm
 from dotenv import load_dotenv
 load_dotenv()
 
 APIKEY = os.environ.get("APIKEY")
 CX =  os.environ.get("CX")
 QUERY = "smile png"
-X = 12
 
 def getURLs(start = 0):  
     urlList = []
@@ -24,8 +24,13 @@ def getURLs(start = 0):
 
     return urlList
 
-urlList = []
-for i in range(0, X, 10):
-    urlList += getURLs(i)
+def getUrlList(X):
+    urlList = []
+    # print("Processing Pages:")
+    for i in tqdm(range(0, X, 10), desc="Processing Pages"):
+        urlList += getURLs(i)
+    return urlList[0:X]
 
-print(urlList[0:X])
+# def storeFiles():
+
+print(getUrlList(12))
